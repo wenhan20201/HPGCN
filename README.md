@@ -16,6 +16,7 @@ PYSKL provides links to the pre-processed skeleton pickle annotations.
 
 - NTU RGB+D: [NTU RGB+D Download Link](https://download.openmmlab.com/mmaction/pyskl/data/nturgbd/ntu60_3danno.pkl)
 - NTU RGB+D 120: [NTU RGB+D 120 Download Link](https://download.openmmlab.com/mmaction/pyskl/data/nturgbd/ntu120_3danno.pkl)
+- NTU RGB+D 120: [NTU RGB+D 120 actions labelled](https://rose1.ntu.edu.sg/dataset/actionRecognition/)
 - Kinetics-Skeleton: [Kinetics-Skeleton Download Link](https://download.openmmlab.com/mmaction/pyskl/data/k400/k400_hrnet.pkl)
 - FineGYM: [FineGYM Download Link](https://download.openmmlab.com/mmaction/pyskl/data/gym/gym_hrnet.pkl)
 
