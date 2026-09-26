@@ -55,8 +55,8 @@ class HierarchicalClassSpecificPrototype(nn.Module):
         self.proto_high = nn.Linear(num_proto_low, num_proto_high, bias=False)
         self.class_proto = nn.Embedding(num_classes, num_proto_high)
 
-        self.recover_high = nn.Linear(num_proto_high, num_proto_low)
-        self.recover_low = nn.Linear(num_proto_low, dim)
+        #self.recover_high = nn.Linear(num_proto_high, num_proto_low)
+        #self.recover_low = nn.Linear(num_proto_low, dim)
 
         self.softmax = nn.Softmax(dim=-1)
         self.dropout = nn.Dropout(dropout)
@@ -72,10 +72,10 @@ class HierarchicalClassSpecificPrototype(nn.Module):
             c_proto = self.class_proto(class_idx).unsqueeze(0)
             q_high = q_high * c_proto
 
-        z_high = self.recover_high(q_high)
-        z = self.recover_low(z_high + q_low)
+        #z_high = self.recover_high(q_high)
+        #z = self.recover_low(z_high + q_low)
         proto_feat = q_high.mean(0)
-        return self.dropout(z), proto_feat
+        return proto_feat
 
 
 @BACKBONES.register_module()
@@ -185,20 +185,20 @@ class HPGCN(nn.Module):
         graph = get_graph[-1]
         graph = graph.view(N, M, c_graph, V, V).mean(1).view(N, c_graph, V * V)
 
-        the_graph_list = []
+        #the_graph_list = []
         proto_feat_list = []
         for i in range(N):
             the_graph = graph[i].permute(1, 0)
             if label is not None:
-                the_graph, pf = self.proto_net(the_graph, class_idx=label[i:i+1])
+                pf = self.proto_net(the_graph, class_idx=label[i:i+1])
             else:
-                the_graph, pf = self.proto_net(the_graph)
-            the_graph = the_graph.permute(1, 0).view(c_graph, V, V)
-            the_graph_list.append(the_graph)
+                pf = self.proto_net(the_graph)
+            #the_graph = the_graph.permute(1, 0).view(c_graph, V, V)
+            #the_graph_list.append(the_graph)
             proto_feat_list.append(pf)
 
-        re_graph = torch.stack(the_graph_list)
+        #re_graph = torch.stack(the_graph_list)
         proto_feat = torch.stack(proto_feat_list)
     
 
-        return x, proto_feat
+        return x,  proto_feat
